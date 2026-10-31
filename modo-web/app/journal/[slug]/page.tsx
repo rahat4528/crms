@@ -29,7 +29,7 @@ export default async function JournalArticlePage({ params }: JournalSlugProps) {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <TopBar />
-      <main className="flex-1 container-modo py-12 space-y-10 max-w-4xl">
+      <main className="flex-1 container-virga py-12 space-y-10 max-w-4xl">
         <TrailNav
           items={[
             { label: "Journal", href: "/journal" },

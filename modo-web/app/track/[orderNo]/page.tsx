@@ -22,7 +22,7 @@ export default async function TrackOrderPage({ params }: TrackPageProps) {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <TopBar />
-      <main className="flex-1 container-modo py-12 space-y-8 max-w-2xl">
+      <main className="flex-1 container-virga py-12 space-y-8 max-w-2xl">
         <TrailNav items={[{ label: "Track Shipment" }]} />
 
         <div className="space-y-2">

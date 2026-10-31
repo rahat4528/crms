@@ -51,10 +51,10 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         {/* Brand */}
         <div className="text-center mb-8">
-          <Link href="/" className="inline-block text-3xl font-bold tracking-tight">
-            Modo
+          <Link href="/" className="inline-block text-3xl font-heading font-bold tracking-tight">
+            Virga
           </Link>
-          <p className="text-muted-foreground mt-2 text-sm">Premium Fashion & Lifestyle</p>
+          <p className="text-muted-foreground mt-2 text-sm">Considered Fashion & Living</p>
         </div>
 
         <Card>

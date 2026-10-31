@@ -57,7 +57,7 @@ export default function RegisterPage() {
         // Account created, redirect to login
         router.push("/login?registered=true")
       } else {
-        router.push("/account")
+        router.push("/me")
         router.refresh()
       }
     } catch {
@@ -72,16 +72,16 @@ export default function RegisterPage() {
       <div className="w-full max-w-md">
         {/* Brand */}
         <div className="text-center mb-8">
-          <Link href="/" className="inline-block text-3xl font-bold tracking-tight">
-            Modo
+          <Link href="/" className="inline-block text-3xl font-serif font-medium tracking-tight">
+            Virga
           </Link>
-          <p className="text-muted-foreground mt-2 text-sm">Premium Fashion & Lifestyle</p>
+          <p className="text-muted-foreground mt-2 text-sm tracking-wide">Considered Fashion & Living</p>
         </div>
 
         <Card>
           <CardHeader>
             <CardTitle>Create your account</CardTitle>
-            <CardDescription>Join Modo and discover premium fashion</CardDescription>
+            <CardDescription>Join Virga and discover considered fashion</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -159,12 +159,12 @@ export default function RegisterPage() {
 
               <p className="text-xs text-muted-foreground text-center">
                 By creating an account, you agree to our{" "}
-                <Link href="/terms" className="underline hover:text-foreground">
-                  Terms of Service
+                <Link href="/terms-of-use" className="underline hover:text-foreground">
+                  Terms of Use
                 </Link>{" "}
                 and{" "}
-                <Link href="/privacy" className="underline hover:text-foreground">
-                  Privacy Policy
+                <Link href="/privacy-notice" className="underline hover:text-foreground">
+                  Privacy Notice
                 </Link>
                 .
               </p>

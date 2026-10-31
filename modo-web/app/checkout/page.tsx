@@ -15,7 +15,7 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     try {
-      const stored = localStorage.getItem("modo_bag")
+      const stored = localStorage.getItem("virga_bag") || localStorage.getItem("modo_bag")
       if (stored) {
         const parsed = JSON.parse(stored)
         if (Array.isArray(parsed)) {
@@ -37,7 +37,7 @@ export default function CheckoutPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <TopBar />
-      <main className="flex-1 container-modo py-10 space-y-8 max-w-5xl">
+      <main className="flex-1 container-virga py-10 space-y-8 max-w-5xl">
         <div className="pb-4 border-b border-border/60">
           <h1 className="font-heading text-3xl font-bold tracking-tight text-foreground">
             Checkout

@@ -80,6 +80,7 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
       if (res.ok && data.ok) {
         // Clear local bag
         if (typeof window !== "undefined") {
+          localStorage.removeItem("virga_bag")
           localStorage.removeItem("modo_bag")
         }
         toast.success("Order confirmed!")
@@ -332,7 +333,7 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
 
           <div className="flex items-center space-x-2 text-xs text-muted-foreground">
             <ShieldCheck className="h-4 w-4 text-secondary flex-shrink-0" />
-            <span>By placing this order you agree to Modo&apos;s Terms of Use and Return Policy.</span>
+            <span>By placing this order you agree to Virga&apos;s Terms of Use and Return Policy.</span>
           </div>
 
           <div className="flex gap-3">

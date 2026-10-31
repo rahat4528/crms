@@ -10,7 +10,7 @@ import {
 
 const faqs = [
   {
-    q: "How does Modo ship worldwide?",
+    q: "How does Virga ship worldwide?",
     a: "All orders are dispatched from our Italian and US distribution facilities via carbon-neutral express courier. Orders over $150 receive complimentary delivery.",
   },
   {
@@ -18,7 +18,7 @@ const faqs = [
     a: "We offer complimentary 30-day returns and exchanges. Items must be unwashed, unworn, and retain all original fabric seals.",
   },
   {
-    q: "How are Modo fibers sourced?",
+    q: "How are Virga fibers sourced?",
     a: "We use exclusively GOTS-certified organic cotton, certified mulesing-free virgin wool, and sustainably harvested Mongolian cashmere with complete traceability.",
   },
   {
@@ -35,7 +35,7 @@ export default function HelpPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <TopBar />
-      <main className="flex-1 container-modo py-12 space-y-8 max-w-3xl">
+      <main className="flex-1 container-virga py-12 space-y-8 max-w-3xl">
         <TrailNav items={[{ label: "Help & FAQ" }]} />
 
         <div className="space-y-2">

@@ -6,7 +6,7 @@ export default function TermsOfUsePage() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <TopBar />
-      <main className="flex-1 container-modo py-12 space-y-8 max-w-3xl">
+      <main className="flex-1 container-virga py-12 space-y-8 max-w-3xl">
         <TrailNav items={[{ label: "Terms of Use" }]} />
 
         <div className="space-y-3">
@@ -21,7 +21,7 @@ export default function TermsOfUsePage() {
 
         <div className="prose prose-stone dark:prose-invert space-y-6 text-foreground/80 leading-relaxed text-sm">
           <p>
-            Welcome to Modo. By accessing or using our website, purchasing pieces, or engaging with our studio, you agree to be bound by these terms.
+            Welcome to Virga. By accessing or using our website, purchasing pieces, or engaging with our studio, you agree to be bound by these terms.
           </p>
 
           <h2 className="font-heading text-lg font-bold text-foreground">1. Purchase & Pricing</h2>
@@ -36,7 +36,7 @@ export default function TermsOfUsePage() {
 
           <h2 className="font-heading text-lg font-bold text-foreground">3. Intellectual Property</h2>
           <p>
-            All text, photography, graphic identities, and garment patterns are the exclusive intellectual property of Modo and may not be duplicated without explicit consent.
+            All text, photography, graphic identities, and garment patterns are the exclusive intellectual property of Virga and may not be duplicated without explicit consent.
           </p>
         </div>
       </main>

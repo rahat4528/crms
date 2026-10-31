@@ -22,7 +22,7 @@ export default async function JournalPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <TopBar />
-      <main className="flex-1 container-modo py-12 space-y-10">
+      <main className="flex-1 container-virga py-12 space-y-10">
         <TrailNav items={[{ label: "Journal" }]} />
 
         <div className="space-y-3 max-w-2xl">
@@ -30,7 +30,7 @@ export default async function JournalPage() {
             Editorial Dispatches
           </span>
           <h1 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-foreground">
-            The Modo Journal
+            The Virga Journal
           </h1>
           <p className="text-base text-muted-foreground leading-relaxed">
             Essays, atelier visits, and reflections on intentional craft, fiber provenance, and quiet living.

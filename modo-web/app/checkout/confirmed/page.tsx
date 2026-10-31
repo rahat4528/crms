@@ -14,7 +14,7 @@ export default async function ConfirmedPage({ searchParams }: ConfirmedPageProps
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <TopBar />
-      <main className="flex-1 container-modo py-16 flex items-center justify-center">
+      <main className="flex-1 container-virga py-16 flex items-center justify-center">
         <div className="max-w-md w-full text-center space-y-6 p-8 rounded-3xl bg-card border border-border/80 shadow-sm">
           <div className="h-16 w-16 rounded-full bg-secondary/15 text-secondary flex items-center justify-center mx-auto">
             <CheckCircle2 className="h-8 w-8" />

@@ -22,7 +22,7 @@ export function HeroBanner({ initialBanner }: HeroBannerProps) {
       <div className="absolute inset-0 z-0">
         <Image
           src={backdrop}
-          alt="Modo Collection"
+          alt="Virga Collection"
           fill
           priority
           sizes="100vw"
@@ -32,7 +32,7 @@ export function HeroBanner({ initialBanner }: HeroBannerProps) {
       </div>
 
       {/* Content */}
-      <div className="container-modo relative z-10 py-24 sm:py-32">
+      <div className="container-virga relative z-10 py-24 sm:py-32">
         <div className="max-w-2xl space-y-6">
           <span className="inline-block px-3.5 py-1 text-xs font-semibold uppercase tracking-widest bg-background/80 backdrop-blur-md rounded-full text-foreground border border-border/60">
             Considered Living

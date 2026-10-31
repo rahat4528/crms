@@ -7,7 +7,7 @@ export default function StoryPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <TopBar />
-      <main className="flex-1 container-modo py-12 space-y-12 max-w-4xl">
+      <main className="flex-1 container-virga py-12 space-y-12 max-w-4xl">
         <TrailNav items={[{ label: "Our Story" }]} />
 
         <div className="space-y-4">
@@ -15,14 +15,14 @@ export default function StoryPage() {
             The Philosophy
           </span>
           <h1 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-foreground leading-[1.1]">
-            Modo was founded on a simple truth: what we wear and live with should age with character, not expire with seasons.
+            Virga was founded on a simple truth: what we wear and live with should age with character, not expire with seasons.
           </h1>
         </div>
 
         <div className="relative aspect-[16/9] rounded-3xl overflow-hidden bg-muted border border-border/80 shadow-sm">
           <Image
             src="/elegant-fashion-atelier.jpg"
-            alt="Modo Atelier"
+            alt="Virga Atelier"
             fill
             sizes="(min-width: 1024px) 800px, 100vw"
             className="object-cover"
@@ -31,7 +31,7 @@ export default function StoryPage() {
 
         <div className="prose prose-stone dark:prose-invert max-w-none space-y-6 text-foreground/90 leading-relaxed text-base sm:text-lg">
           <p>
-            In an era of relentless novelty and disposable consumption, Modo embraces radical reduction. We craft fewer, better pieces rooted in uncompromised material integrity.
+            In an era of relentless novelty and disposable consumption, Virga embraces radical reduction. We craft fewer, better pieces rooted in uncompromised material integrity.
           </p>
 
           <h2 className="font-heading text-2xl font-bold text-foreground pt-4">

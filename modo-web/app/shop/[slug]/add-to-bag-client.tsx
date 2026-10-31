@@ -40,7 +40,7 @@ export function AddToBagClient({ item }: AddToBagClientProps) {
     }
 
     try {
-      const stored = localStorage.getItem("modo_bag")
+      const stored = localStorage.getItem("virga_bag") || localStorage.getItem("modo_bag")
       let bag = stored ? JSON.parse(stored) : []
       if (!Array.isArray(bag)) bag = []
 
@@ -51,7 +51,7 @@ export function AddToBagClient({ item }: AddToBagClientProps) {
         bag.push(bagItem)
       }
 
-      localStorage.setItem("modo_bag", JSON.stringify(bag))
+      localStorage.setItem("virga_bag", JSON.stringify(bag))
       setIsAdded(true)
       toast.success(`Added ${item.title} to your bag`)
       setTimeout(() => setIsAdded(false), 2000)

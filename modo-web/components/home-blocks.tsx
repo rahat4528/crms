@@ -19,7 +19,7 @@ export function HomeBlocks({ blocks = [] }: HomeBlocksProps) {
         if (!items || items.length === 0) return null
 
         return (
-          <section key={block._id} className="container-modo">
+          <section key={block._id} className="container-virga">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
               <div>
                 <span className="text-xs font-semibold uppercase tracking-widest text-primary">

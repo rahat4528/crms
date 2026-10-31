@@ -26,7 +26,7 @@ export default function ReachUsPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <TopBar />
-      <main className="flex-1 container-modo py-12 space-y-10 max-w-4xl">
+      <main className="flex-1 container-virga py-12 space-y-10 max-w-4xl">
         <TrailNav items={[{ label: "Reach Us" }]} />
 
         <div className="space-y-3">
@@ -76,7 +76,7 @@ export default function ReachUsPage() {
               <Mail className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
               <div className="text-sm">
                 <span className="font-semibold block text-foreground">Direct Concierge</span>
-                <span className="text-muted-foreground">concierge@modo.store</span>
+                <span className="text-muted-foreground">concierge@virga.store</span>
               </div>
             </div>
 
@@ -84,7 +84,7 @@ export default function ReachUsPage() {
               <Phone className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
               <div className="text-sm">
                 <span className="font-semibold block text-foreground">Phone Inquiries</span>
-                <span className="text-muted-foreground">+1 (800) 555-MODO</span>
+                <span className="text-muted-foreground">+1 (800) 555-VIRGA</span>
               </div>
             </div>
 

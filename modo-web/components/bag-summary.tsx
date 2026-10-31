@@ -24,10 +24,11 @@ export function BagSummary({ subtotal, onApplyPromo, promoDiscount = 0 }: BagSum
     e.preventDefault()
     if (!promoInput.trim()) return
 
-    if (promoInput.trim().toUpperCase() === "MODO10") {
-      onApplyPromo?.("MODO10")
-      toast.success("Promo code MODO10 applied (10% off)")
-    } else if (promoInput.trim().toUpperCase() === "FREESHIP") {
+    const code = promoInput.trim().toUpperCase()
+    if (code === "VIRGA10" || code === "MODO10") {
+      onApplyPromo?.("VIRGA10")
+      toast.success("Promo code VIRGA10 applied (10% off)")
+    } else if (code === "FREESHIP") {
       onApplyPromo?.("FREESHIP")
       toast.success("Promo code FREESHIP applied (Free shipping)")
     } else {

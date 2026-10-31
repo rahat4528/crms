@@ -40,7 +40,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <TopBar />
-      <main className="flex-1 container-modo py-10 space-y-6">
+      <main className="flex-1 container-virga py-10 space-y-6">
         <TrailNav items={[{ label: "Search" }]} />
 
         <div className="pb-4 border-b border-border/60">

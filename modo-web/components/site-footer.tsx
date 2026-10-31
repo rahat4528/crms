@@ -45,12 +45,12 @@ const footerNav = [
 export function SiteFooter() {
   return (
     <footer className="border-t border-border/80 bg-card mt-auto">
-      <div className="container-modo py-16">
+      <div className="container-virga py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10">
           {/* Brand & Newsletter */}
           <div className="lg:col-span-2 space-y-4">
             <Link href="/" className="font-heading text-2xl font-bold tracking-tight text-foreground">
-              Modo
+              Virga
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
               Considered fashion and living essentials crafted with purpose, tactile materials, and enduring design.
@@ -58,7 +58,7 @@ export function SiteFooter() {
 
             <div className="pt-2">
               <h4 className="text-xs font-semibold uppercase tracking-wider text-foreground mb-2">
-                Receive the Modo Dispatches
+                Receive the Virga Dispatches
               </h4>
               <form className="flex space-x-2" onSubmit={(e) => e.preventDefault()}>
                 <Input
@@ -96,7 +96,7 @@ export function SiteFooter() {
         </div>
 
         <div className="border-t border-border/60 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-muted-foreground gap-4">
-          <div>© {new Date().getFullYear()} Modo. All rights reserved. Considered Fashion & Living.</div>
+          <div>© {new Date().getFullYear()} Virga. All rights reserved. Considered Fashion & Living.</div>
           <div className="flex items-center space-x-6">
             <Link href="/privacy-notice" className="hover:text-foreground">
               Privacy

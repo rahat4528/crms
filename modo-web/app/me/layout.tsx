@@ -13,7 +13,7 @@ export default function MeLayout({
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <TopBar />
-      <main className="flex-1 container-modo py-8 space-y-6">
+      <main className="flex-1 container-virga py-8 space-y-6">
         <TrailNav items={[{ label: "Client Account", href: "/me" }]} />
         <div className="flex flex-col md:flex-row gap-8">
           <MeSidebar />

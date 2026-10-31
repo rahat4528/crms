@@ -51,7 +51,7 @@ export default async function CollectionDetailPage({ params }: CollectionPagePro
               <Image src={collection.cover} alt={collection.title} fill sizes="100vw" className="object-cover" />
             </div>
           )}
-          <div className="container-modo relative z-10 space-y-4">
+          <div className="container-virga relative z-10 space-y-4">
             <TrailNav
               items={[
                 { label: "Collections", href: "/shop" },
@@ -88,7 +88,7 @@ export default async function CollectionDetailPage({ params }: CollectionPagePro
         </div>
 
         {/* Items Grid */}
-        <div className="container-modo py-12 space-y-6">
+        <div className="container-virga py-12 space-y-6">
           <div className="flex justify-between items-center text-xs text-muted-foreground">
             <span>Showing {items.length} pieces in {collection.title}</span>
             <Link href="/shop" className="hover:text-foreground">

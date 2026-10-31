@@ -17,7 +17,7 @@ export function ItemQuestions({ details = [] }: ItemQuestionsProps) {
     },
     {
       q: "Where is this piece crafted?",
-      a: "Modo garments are produced in ethical micro-ateliers across Marche and Tuscany, Italy, and Porto, Portugal. Each facility upholds living wages and fair labor standards.",
+      a: "Virga garments are produced in ethical micro-ateliers across Marche and Tuscany, Italy, and Porto, Portugal. Each facility upholds living wages and fair labor standards.",
     },
     {
       q: "What is your exchange and return policy?",

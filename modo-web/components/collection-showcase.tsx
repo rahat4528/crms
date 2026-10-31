@@ -18,7 +18,7 @@ export function CollectionShowcase({ collections = [] }: CollectionShowcaseProps
 
   return (
     <section className="py-16 sm:py-24 border-b border-border/60">
-      <div className="container-modo space-y-8">
+      <div className="container-virga space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
             <span className="text-xs font-semibold uppercase tracking-widest text-primary">

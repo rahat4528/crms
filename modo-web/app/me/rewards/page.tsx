@@ -5,7 +5,7 @@ export default function MeRewardsPage() {
     <div className="space-y-6">
       <div className="pb-3 border-b border-border/60">
         <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">
-          Modo Rewards & Tiers
+          Virga Rewards & Tiers
         </h1>
         <p className="text-xs text-muted-foreground mt-1">
           Exclusive benefits, tier progress, and concierge privileges.

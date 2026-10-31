@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: ItemPageProps): Promise<Metad
     title: item.title,
     description: item.summary || item.description?.slice(0, 160),
     openGraph: {
-      title: `${item.title} — Modo`,
+      title: `${item.title} — Virga`,
       description: item.summary || item.description?.slice(0, 160),
       images: item.gallery?.[0]?.src ? [{ url: item.gallery[0].src }] : [],
     },
@@ -83,7 +83,7 @@ export default async function ItemDetailPage({ params }: ItemPageProps) {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <TopBar />
-      <main className="flex-1 container-modo py-6 space-y-12">
+      <main className="flex-1 container-virga py-6 space-y-12">
         <TrailNav
           items={[
             { label: "Shop", href: "/shop" },

@@ -17,7 +17,7 @@ export default function BagPage() {
 
   useEffect(() => {
     try {
-      const stored = localStorage.getItem("modo_bag")
+      const stored = localStorage.getItem("virga_bag") || localStorage.getItem("modo_bag")
       if (stored) {
         const parsed = JSON.parse(stored)
         if (Array.isArray(parsed)) {
@@ -34,17 +34,17 @@ export default function BagPage() {
   function updateQty(id: string, qty: number) {
     const updated = items.map((item) => (item.id === id ? { ...item, qty } : item))
     setItems(updated)
-    localStorage.setItem("modo_bag", JSON.stringify(updated))
+    localStorage.setItem("virga_bag", JSON.stringify(updated))
   }
 
   function removeItem(id: string) {
     const updated = items.filter((item) => item.id !== id)
     setItems(updated)
-    localStorage.setItem("modo_bag", JSON.stringify(updated))
+    localStorage.setItem("virga_bag", JSON.stringify(updated))
   }
 
   function handleApplyPromo(code: string) {
-    if (code === "MODO10") {
+    if (code === "VIRGA10" || code === "MODO10") {
       setPromoDiscount(Math.round(subtotal * 0.1 * 100) / 100)
     } else if (code === "FREESHIP") {
       setPromoDiscount(12)
@@ -56,7 +56,7 @@ export default function BagPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <TopBar />
-      <main className="flex-1 container-modo py-8 space-y-8">
+      <main className="flex-1 container-virga py-8 space-y-8">
         <TrailNav items={[{ label: "Shopping Bag" }]} />
 
         <div className="pb-4 border-b border-border/60">

@@ -22,7 +22,7 @@ export default function FitGuidePage() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <TopBar />
-      <main className="flex-1 container-modo py-12 space-y-8 max-w-3xl">
+      <main className="flex-1 container-virga py-12 space-y-8 max-w-3xl">
         <TrailNav items={[{ label: "Fit & Sizing Guide" }]} />
 
         <div className="space-y-2">

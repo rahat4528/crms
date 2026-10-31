@@ -43,7 +43,7 @@ export function TopBar() {
     // Read initial bag count from localStorage if available
     if (typeof window !== "undefined") {
       try {
-        const storedBag = localStorage.getItem("modo_bag")
+        const storedBag = localStorage.getItem("virga_bag") || localStorage.getItem("modo_bag")
         if (storedBag) {
           const parsed = JSON.parse(storedBag)
           if (Array.isArray(parsed)) {
@@ -65,12 +65,12 @@ export function TopBar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/80 bg-background/90 backdrop-blur-md">
-      <div className="container-modo">
+      <div className="container-virga">
         <div className="flex h-16 items-center justify-between gap-4">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <span className="font-heading text-2xl font-bold tracking-tight text-foreground">
-              Modo
+              Virga
             </span>
           </Link>
 
@@ -184,7 +184,7 @@ export function TopBar() {
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="font-heading text-2xl font-bold tracking-tight text-foreground"
                   >
-                    Modo
+                    Virga
                   </Link>
 
                   <form onSubmit={handleSearchSubmit} className="w-full">
@@ -240,7 +240,7 @@ export function TopBar() {
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="text-xs uppercase tracking-widest text-primary pt-4 font-semibold"
                     >
-                      Modo Studio →
+                      Virga Studio →
                     </Link>
                   </div>
                 </div>
