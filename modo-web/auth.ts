@@ -1,24 +1,26 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import dbConnect from "@/lib/mongoose"
+import dbConnect from "@/lib/db"
 import User from "@/models/User"
+import { authConfig } from "@/auth.config"
 import { z } from "zod"
 
-const loginSchema = z.object({
+const credentialsSchema = z.object({
   email: z.string().email(),
   password: z.string().min(1),
 })
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  ...authConfig,
   providers: [
     CredentialsProvider({
-      name: "credentials",
+      name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const parsed = loginSchema.safeParse(credentials)
+        const parsed = credentialsSchema.safeParse(credentials)
         if (!parsed.success) return null
 
         const { email, password } = parsed.data
@@ -40,34 +42,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
-
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id
-        token.role = (user as { role?: string }).role ?? "customer"
-      }
-      return token
-    },
-    async session({ session, token }) {
-      if (token && session.user) {
-        session.user.id = token.id as string
-        session.user.role = token.role as string
-      }
-      return session
-    },
-  },
-
-  pages: {
-    signIn: "/login",
-    error: "/login",
-  },
-
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
-
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || "development-secret-key-at-least-32-chars-long",
 })
-
