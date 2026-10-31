@@ -158,7 +158,7 @@ OrderSchema.index({ addedAt: -1 })
 export function generateOrderNumber(): string {
   const year = new Date().getFullYear()
   const randomSixDigits = Math.floor(100000 + Math.random() * 900000)
-  return `MD-${year}-${randomSixDigits}`
+  return `VG-${year}-${randomSixDigits}`
 }
 
 const Order: Model<IOrder> = mongoose.models.Order ?? mongoose.model<IOrder>("Order", OrderSchema)

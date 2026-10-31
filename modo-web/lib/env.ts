@@ -2,10 +2,10 @@ import { z } from "zod"
 
 const envSchema = z.object({
   // Database
-  MODO_DATABASE_URL: z
+  VIRGA_DATABASE_URL: z
     .string()
-    .min(1, "MODO_DATABASE_URL is required")
-    .default(process.env.MONGODB_URI || "mongodb://localhost:27017/modo"),
+    .min(1, "VIRGA_DATABASE_URL is required")
+    .default(process.env.VIRGA_DATABASE_URL || process.env.MODO_DATABASE_URL || process.env.MONGODB_URI || "mongodb://localhost:27017/virga"),
 
   // Authentication
   AUTH_SECRET: z
@@ -31,7 +31,7 @@ const envSchema = z.object({
   CLOUDINARY_API_SECRET: z.string().optional(),
 
   RESEND_API_KEY: z.string().optional(),
-  MAIL_FROM: z.string().default("Modo <concierge@modo.store>"),
+  MAIL_FROM: z.string().default("Virga <concierge@virga.store>"),
 
   LLM_API_KEY: z.string().optional(),
   UPSTASH_REDIS_REST_URL: z.string().optional(),
@@ -43,7 +43,7 @@ export type Env = z.infer<typeof envSchema>
 
 function getEnv(): Env {
   const result = envSchema.safeParse({
-    MODO_DATABASE_URL: process.env.MODO_DATABASE_URL || process.env.MONGODB_URI,
+    VIRGA_DATABASE_URL: process.env.VIRGA_DATABASE_URL || process.env.MODO_DATABASE_URL || process.env.MONGODB_URI,
     AUTH_SECRET: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
     AUTH_URL: process.env.AUTH_URL || process.env.NEXTAUTH_URL,
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL,

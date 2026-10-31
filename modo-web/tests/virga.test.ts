@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest"
 import { slugify, formatPrice, discountPct } from "../lib/cn"
 import { parsePaginationParams, buildPageInfo } from "../lib/api"
 
-describe("Modo Utility Functions", () => {
+describe("Virga Utility Functions", () => {
   it("slugify creates URL-friendly clean slugs", () => {
     expect(slugify("Double-Faced Virgin Wool Coat")).toBe("double-faced-virgin-wool-coat")
     expect(slugify("Cashmere Knit & Scarf (Edition 2)")).toBe("cashmere-knit-scarf-edition-2")
@@ -23,7 +23,7 @@ describe("Modo Utility Functions", () => {
   })
 })
 
-describe("Modo API Envelope & Pagination", () => {
+describe("Virga API Envelope & Pagination", () => {
   it("buildPageInfo computes pagination math correctly", () => {
     const pageInfo = buildPageInfo(60, 1, 12)
     expect(pageInfo.page).toBe(1)
@@ -51,13 +51,14 @@ describe("Modo API Envelope & Pagination", () => {
   })
 })
 
-describe("Modo Business Logic & Security Controls", () => {
-  it("validates order number format adheres to MD-YYYY-000123 convention", () => {
-    const orderNoRegex = /^MD-\d{4}-\d{6}$/
+describe("Virga Business Logic & Security Controls", () => {
+  it("validates order number format adheres to VG-YYYY-000123 convention", () => {
+    const orderNoRegex = /^(VG|MD)-\d{4}-\d{6}$/
+    expect(orderNoRegex.test("VG-2026-000123")).toBe(true)
     expect(orderNoRegex.test("MD-2026-000123")).toBe(true)
-    expect(orderNoRegex.test("MD-2025-999999")).toBe(true)
+    expect(orderNoRegex.test("VG-2025-999999")).toBe(true)
     expect(orderNoRegex.test("ORD-12345")).toBe(false)
-    expect(orderNoRegex.test("MD-26-00123")).toBe(false)
+    expect(orderNoRegex.test("VG-26-00123")).toBe(false)
   })
 
   it("calculates order total accurately with tax and shipping", () => {

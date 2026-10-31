@@ -33,7 +33,7 @@ const JournalEntrySchema = new Schema<IJournalEntry>(
     coverImage: { type: String, default: "" },
     labels: [{ type: String, trim: true }],
     author: {
-      name: { type: String, default: "Modo Editorial" },
+      name: { type: String, default: "Virga Editorial" },
       avatar: { type: String },
     },
     linkedItems: [{ type: Schema.Types.ObjectId, ref: "Item" }],

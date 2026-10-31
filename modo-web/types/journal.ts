@@ -9,10 +9,10 @@ export const JournalEntrySchema = z.object({
   labels: z.array(z.string()).default([]),
   author: z
     .object({
-      name: z.string().default("Modo Editorial"),
+      name: z.string().default("Virga Editorial"),
       avatar: z.string().optional(),
     })
-    .default({ name: "Modo Editorial" }),
+    .default({ name: "Virga Editorial" }),
   linkedItems: z.array(z.string()).default([]),
   readingMinutes: z.number().int().min(1).default(3),
   publishedAt: z.string().optional(),

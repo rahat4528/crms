@@ -30,19 +30,19 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Modo — Considered Fashion & Living",
-    template: "%s — Modo",
+    default: "Virga — Considered Fashion & Living",
+    template: "%s — Virga",
   },
   description:
-    "Modo presents considered fashion and living essentials crafted with purpose, tactile materials, and enduring design.",
-  keywords: ["considered fashion", "living", "slow fashion", "curated", "modo"],
-  authors: [{ name: "Modo" }],
-  creator: "Modo",
+    "Virga presents considered fashion and living essentials crafted with purpose, tactile materials, and enduring design.",
+  keywords: ["considered fashion", "living", "slow fashion", "curated", "virga", "lifestyle"],
+  authors: [{ name: "Virga" }],
+  creator: "Virga",
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "Modo",
-    title: "Modo — Considered Fashion & Living",
+    siteName: "Virga",
+    title: "Virga — Considered Fashion & Living",
     description:
       "Considered fashion and living essentials crafted with purpose and enduring design.",
   },
