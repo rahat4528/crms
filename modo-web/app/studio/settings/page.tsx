@@ -21,7 +21,7 @@ export default function StudioSettingsPage() {
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Store Name</Label>
-              <Input defaultValue="Modo" className="rounded-xl" />
+              <Input defaultValue="Virga" className="rounded-xl" />
             </div>
             <div className="space-y-2">
               <Label>Tagline</Label>
@@ -30,7 +30,7 @@ export default function StudioSettingsPage() {
           </div>
           <div className="space-y-2">
             <Label>Contact Concierge Email</Label>
-            <Input defaultValue="concierge@modo.store" className="rounded-xl" />
+            <Input defaultValue="concierge@virga.store" className="rounded-xl" />
           </div>
         </div>
 

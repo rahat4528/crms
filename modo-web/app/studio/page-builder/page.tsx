@@ -8,7 +8,7 @@ import { Eye, Plus, Layout, Save } from "lucide-react"
 import { toast } from "sonner"
 
 export default function StudioPageBuilderPage() {
-  const [pageTitle, setPageTitle] = useState("Modo Flagship Atelier")
+  const [pageTitle, setPageTitle] = useState("Virga Flagship Atelier")
   const [blocks, setBlocks] = useState([
     { type: "hero", title: "Full Bleed Atelier Photo" },
     { type: "text", title: "Atelier Origin Narrative" },

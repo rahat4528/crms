@@ -1,4 +1,4 @@
-name: Modo CI Pipeline
+name: Virga CI Pipeline
 
 on:
   push:

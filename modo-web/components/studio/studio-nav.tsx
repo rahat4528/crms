@@ -48,11 +48,11 @@ export function StudioNav() {
       {/* Studio Header */}
       <div className="flex items-center space-x-2.5 px-3 py-4 border-b border-sidebar-border mb-4">
         <div className="h-8 w-8 rounded-xl bg-primary text-primary-foreground flex items-center justify-center font-bold font-heading text-sm shadow-sm">
-          M
+          V
         </div>
         <div>
           <span className="font-heading font-bold text-base block text-sidebar-foreground">
-            Modo Studio
+            Virga Studio
           </span>
           <span className="text-[11px] text-muted-foreground block -mt-0.5">
             Admin Workspace

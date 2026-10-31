@@ -53,7 +53,7 @@ export function CatalogForm() {
           isFresh,
           isOffer,
           details: [
-            { label: "Craft", value: "Modo Atelier Series" },
+            { label: "Craft", value: "Virga Atelier Series" },
             { label: "Care", value: "Specialist dry clean only" },
           ],
         }),

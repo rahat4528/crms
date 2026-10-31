@@ -27,7 +27,7 @@ export default async function StudioLayout({
         <header className="h-16 border-b border-border/80 px-8 flex items-center justify-between bg-card/60 backdrop-blur-sm sticky top-0 z-40">
           <div className="flex items-center space-x-2">
             <span className="text-xs uppercase tracking-widest text-primary font-semibold">
-              Modo Studio Workspace
+              Virga Studio Workspace
             </span>
           </div>
           <div className="flex items-center space-x-4 text-xs">

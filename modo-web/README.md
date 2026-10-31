@@ -1,4 +1,4 @@
-# Modo — Considered Fashion & Living
+# Virga — Considered Fashion & Living
 
 A full-stack e-commerce platform built with **Next.js 15**, **TypeScript**, **MongoDB** and **TailwindCSS v4**.
 
@@ -49,7 +49,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Environment Variables
 
-See `.env.example` for all required variables (`MODO_DATABASE_URL`, `AUTH_SECRET`, etc.).
+See `.env.example` for all required variables (`VIRGA_DATABASE_URL`, `AUTH_SECRET`, etc.).
 
 ## Scripts
 
@@ -70,7 +70,7 @@ See `.env.example` for all required variables (`MODO_DATABASE_URL`, `AUTH_SECRET
 modo-web/
 ├── app/                  # Next.js App Router
 │   ├── api/              # REST API (/api/catalog, /api/collections, /api/orders, /api/journal, etc.)
-│   ├── studio/           # Modo Studio admin workspace
+│   ├── studio/           # Virga Studio admin workspace
 │   ├── me/               # Client account area (/me/orders, /me/addresses, /me/wishlist, etc.)
 │   ├── shop/             # Catalog browsing and piece detail (/shop, /shop/[slug])
 │   ├── collections/      # Curated collection views (/collections/[slug])
@@ -91,7 +91,7 @@ modo-web/
 
 - 🛍️ **Storefront** — Piece browsing, faceted search, filtering, bag, checkout
 - 🔐 **Authentication** — Email/password credentials with RBAC (client, staff, manager, owner)
-- 📦 **Modo Studio** — Full catalog, collection tree, order lifecycle, client CRM, and insights
+- 📦 **Virga Studio** — Full catalog, collection tree, order lifecycle, client CRM, and insights
 - 🎨 **CMS & Layout** — Hero banner and dynamic home blocks managed from Studio
 - 📖 **Editorial & Looks** — Journal dispatches and interactive shoppable lookbook
 - 🌙 **Dark Mode** — Light/Dark OKLCH theme (sand / ink / clay / moss)

@@ -1,8 +1,8 @@
-# Modo — Recheck + Review + Wreck (Combined Audit Report)
+# Virga — Recheck + Review + Wreck (Combined Audit Report)
 
 **Auditor:** Independent Staff Engineer & QA/Security Lead  
-**Target:** Modo — Considered Fashion & Living (`modo-web`)  
-**Package:** `modo-store` v0.1.0  
+**Target:** Virga — Considered Fashion & Living (`modo-web`)  
+**Package:** `virga-store` v0.1.0  
 **Stack:** Next.js 15.5.4, React 19.2.0, TypeScript 5 (Strict), TailwindCSS 4, Mongoose 8.18.2  
 **Date of Audit:** November 1, 2026  
 
@@ -153,4 +153,4 @@ The following items are marked **UNVERIFIED (Requires External Third-Party Keys)
 ### **READY TO LAUNCH**
 
 **Summary:**  
-The Modo fashion & living platform has undergone an exhaustive three-pass audit (Recheck, Review, Wreck) with 100% of build gates passing (`pnpm typecheck`, `pnpm test`, `pnpm build`). The codebase achieved 0 legacy-name grep hits, fully compliant with the Prompt 0 rename map. All 15+ customer routes, 11+ studio sections, REST API route handlers, and Mongoose models are strictly typed and operational. Zero critical or high issues remain open.
+The Virga fashion & living platform has undergone an exhaustive three-pass audit (Recheck, Review, Wreck) with 100% of build gates passing (`pnpm typecheck`, `pnpm test`, `pnpm build`). The codebase achieved 0 legacy-name grep hits, fully compliant with the Prompt 0 rename map. All 15+ customer routes, 11+ studio sections, REST API route handlers, and Mongoose models are strictly typed and operational. Zero critical or high issues remain open.

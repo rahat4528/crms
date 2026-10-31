@@ -29,7 +29,7 @@ const SAMPLE_IMAGES = [
 ]
 
 async function seed() {
-  console.log("🌱 Starting Modo database seed...")
+  console.log("🌱 Starting Virga database seed...")
   await dbConnect()
 
   // Clean existing data for idempotency
@@ -53,7 +53,7 @@ async function seed() {
 
   const owner = await User.create({
     name: "Elena Vance",
-    email: "owner@modo.store",
+    email: "owner@virga.store",
     password: defaultPassword,
     role: "owner",
     phone: "+1 (555) 019-2834",
@@ -72,7 +72,7 @@ async function seed() {
 
   const staff = await User.create({
     name: "Marcus Thorne",
-    email: "staff@modo.store",
+    email: "staff@virga.store",
     password: defaultPassword,
     role: "staff",
   })
@@ -245,9 +245,9 @@ async function seed() {
         revenue: (35 + (i * 7) % 150) * price,
       },
       options: [
-        { label: "Small", size: "S", sku: `MD-${slug.slice(0, 4).toUpperCase()}-S`, price, listPrice, stock: 8, isEnabled: true },
-        { label: "Medium", size: "M", sku: `MD-${slug.slice(0, 4).toUpperCase()}-M`, price, listPrice, stock: 10, isEnabled: true },
-        { label: "Large", size: "L", sku: `MD-${slug.slice(0, 4).toUpperCase()}-L`, price, listPrice, stock: 6, isEnabled: true },
+        { label: "Small", size: "S", sku: `VG-${slug.slice(0, 4).toUpperCase()}-S`, price, listPrice, stock: 8, isEnabled: true },
+        { label: "Medium", size: "M", sku: `VG-${slug.slice(0, 4).toUpperCase()}-M`, price, listPrice, stock: 10, isEnabled: true },
+        { label: "Large", size: "L", sku: `VG-${slug.slice(0, 4).toUpperCase()}-L`, price, listPrice, stock: 6, isEnabled: true },
       ],
       details: [
         { label: "Composition", value: i % 2 === 0 ? "100% Mongolian Cashmere" : "100% Virgin Wool" },
@@ -255,7 +255,7 @@ async function seed() {
         { label: "Care", value: "Specialist dry clean only or cold hand wash" },
       ],
       meta: {
-        metaTitle: `${title} — Modo`,
+        metaTitle: `${title} — Virga`,
         metaDescription: `Discover the ${title}. Crafted from sustainably sourced fibers with modern proportions.`,
       },
     })
@@ -325,7 +325,7 @@ async function seed() {
     { title: "The Architecture of Natural Light", excerpt: "Studio visit with ceramicist Astrid Holm at her coastal Copenhagen workshop.", labels: ["living", "atelier"] },
     { title: "In Praise of Heavyweight Tailoring", excerpt: "Why structured British woolens maintain drape and resilience better than featherweight blends.", labels: ["tailoring", "heritage"] },
     { title: "Baroque Pearls and Wabi-Sabi Aesthetics", excerpt: "Embracing organic asymmetry in fine jewelry made from recycled precious metals.", labels: ["jewelry", "design"] },
-    { title: "Slow Production and Seasonal Restraint", excerpt: "Why Modo limits our core catalog to fewer than one hundred deliberate silhouettes.", labels: ["manifesto", "slow-fashion"] },
+    { title: "Slow Production and Seasonal Restraint", excerpt: "Why Virga limits our core catalog to fewer than one hundred deliberate silhouettes.", labels: ["manifesto", "slow-fashion"] },
     { title: "Care, Repair and the Art of Longevity", excerpt: "Our definitive guide to laundering knitwear, cedar storage, and resoling goodyear shoes.", labels: ["care", "guides"] },
   ]
 
@@ -338,7 +338,7 @@ async function seed() {
       body: `## The Philosophy\n\nEvery fabric tells a story of origin, soil, climate, and human hand. When we speak of considered luxury, we speak not of excess, but of radical reduction to what truly matters.\n\n### Material Integrity\n\nQuality is felt before it is understood. The hand-feel of long-staple fibers, the tension of balanced yarns, the subtle weight of horn buttons chosen to withstand decades of fastening.\n\n### Care & Preservation\n\nWhen treated with respect, fine garments reward their caretaker by growing softer and richer with each passing season.`,
       coverImage: SAMPLE_IMAGES[i % SAMPLE_IMAGES.length],
       labels: j.labels,
-      author: { name: "Modo Editorial", avatar: "/team-member-2.jpg" },
+      author: { name: "Virga Editorial", avatar: "/team-member-2.jpg" },
       linkedItems: seededItems.slice(i * 2, i * 2 + 3).map((item) => item._id),
       readingMinutes: 4,
       publishedAt: new Date(Date.now() - i * 86400000 * 3),
@@ -447,6 +447,7 @@ async function seed() {
 
   // 10. Seed Promo Codes
   const PROMO_CODES = [
+    { code: "VIRGA10", discountType: "percentage" as const, value: 10, minSpend: 100 },
     { code: "MODO10", discountType: "percentage" as const, value: 10, minSpend: 100 },
     { code: "WELCOME20", discountType: "percentage" as const, value: 20, minSpend: 200 },
     { code: "VIP50", discountType: "fixed" as const, value: 50, minSpend: 300 },
