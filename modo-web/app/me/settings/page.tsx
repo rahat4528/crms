@@ -1,10 +1,14 @@
 import { auth } from "@/auth"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { redirect } from "next/navigation"
+import { SettingsForm } from "./settings-form"
+
+export const dynamic = "force-dynamic"
 
 export default async function MeSettingsPage() {
   const session = await auth()
+  if (!session?.user) {
+    redirect("/login?callbackUrl=/me/settings")
+  }
 
   return (
     <div className="space-y-6">
@@ -17,22 +21,10 @@ export default async function MeSettingsPage() {
         </p>
       </div>
 
-      <div className="p-6 rounded-3xl bg-card border border-border/80 shadow-sm space-y-4 max-w-xl">
-        <div className="space-y-2">
-          <Label htmlFor="name">Display Name</Label>
-          <Input id="name" defaultValue={session?.user?.name || ""} className="rounded-xl" />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="email">Email Address</Label>
-          <Input id="email" defaultValue={session?.user?.email || ""} disabled className="rounded-xl bg-muted" />
-        </div>
-
-        <Button size="sm" className="rounded-full text-xs px-6">
-          Save Changes
-        </Button>
-      </div>
+      <SettingsForm
+        initialName={session.user.name || ""}
+        email={session.user.email || ""}
+      />
     </div>
   )
 }
-

@@ -1,8 +1,9 @@
 import { auth } from "@/auth"
+import { redirect } from "next/navigation"
 import dbConnect from "@/lib/db"
 import Order from "@/models/Order"
 import Link from "next/link"
-import { Package, ArrowRight, Heart } from "lucide-react"
+import { Package, ArrowRight } from "lucide-react"
 import { formatPrice } from "@/lib/cn"
 import { Badge } from "@/components/ui/badge"
 
@@ -10,10 +11,14 @@ export const dynamic = "force-dynamic"
 
 export default async function MeOverviewPage() {
   const session = await auth()
+  if (!session?.user) {
+    redirect("/login?callbackUrl=/me")
+  }
+
   await dbConnect()
 
   const recentOrders = await Order.find({
-    $or: [{ client: session?.user?.id }, { email: session?.user?.email }],
+    $or: [{ client: session.user.id }, { email: session.user.email }],
   })
     .sort({ addedAt: -1 })
     .limit(3)
@@ -26,17 +31,18 @@ export default async function MeOverviewPage() {
           Welcome
         </span>
         <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">
-          Hello, {session?.user?.name || "Valued Client"}
+          Hello, {session.user.name || "Valued Client"}
         </h1>
-        <p className="text-xs text-muted-foreground">{session?.user?.email}</p>
+        <p className="text-xs text-muted-foreground">{session.user.email}</p>
       </div>
 
       {/* Recent Orders */}
       <div className="p-6 rounded-3xl bg-card border border-border/80 shadow-sm space-y-4">
         <div className="flex justify-between items-center">
           <h2 className="font-heading text-base font-bold text-foreground">Recent Orders</h2>
-          <Link href="/me/orders" className="text-xs text-primary hover:underline font-medium">
-            View all →
+          <Link href="/me/orders" className="text-xs text-primary hover:underline font-medium inline-flex items-center gap-1">
+            <span>View all</span>
+            <ArrowRight className="h-3 w-3" />
           </Link>
         </div>
 
@@ -53,7 +59,12 @@ export default async function MeOverviewPage() {
             {recentOrders.map((ord: any) => (
               <div key={ord._id.toString()} className="py-3 flex justify-between items-center text-sm">
                 <div>
-                  <span className="font-mono text-xs font-semibold">{ord.orderNo}</span>
+                  <Link
+                    href={`/track/${ord.orderNo}`}
+                    className="font-mono text-xs font-semibold hover:text-primary transition-colors"
+                  >
+                    {ord.orderNo}
+                  </Link>
                   <span className="text-xs text-muted-foreground ml-2">
                     {new Date(ord.addedAt).toLocaleDateString()}
                   </span>
@@ -61,9 +72,17 @@ export default async function MeOverviewPage() {
                     {ord.lines?.length || 1} items · {formatPrice(ord.totals?.total || 0)}
                   </p>
                 </div>
-                <Badge variant="outline" className="rounded-full text-[10px] capitalize">
-                  {ord.state}
-                </Badge>
+                <div className="flex items-center space-x-2">
+                  <Badge variant="outline" className="rounded-full text-[10px] capitalize">
+                    {ord.state}
+                  </Badge>
+                  <Link
+                    href={`/track/${ord.orderNo}`}
+                    className="text-xs text-primary hover:underline font-medium ml-1"
+                  >
+                    Track
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
