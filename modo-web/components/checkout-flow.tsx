@@ -1,17 +1,28 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Loader2, ShieldCheck, Lock } from "lucide-react"
+import { Loader2, ShieldCheck, Lock, CheckCircle2 } from "lucide-react"
 import { toast } from "sonner"
 import type { BagItemData } from "./bag-line"
 
 interface CheckoutFlowProps {
   items: BagItemData[]
+}
+
+interface SavedAddress {
+  _id?: string
+  label?: string
+  street: string
+  city: string
+  state?: string
+  postalCode: string
+  country: string
+  isDefault?: boolean
 }
 
 export function CheckoutFlow({ items }: CheckoutFlowProps) {
@@ -30,10 +41,84 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
   const [country, setCountry] = useState("US")
   const [shippingMethod, setShippingMethod] = useState("standard")
 
+  // Saved addresses state for logged-in users
+  const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([])
+
   // Payment mock state
   const [cardNumber, setCardNumber] = useState("")
   const [cardExpiry, setCardExpiry] = useState("")
   const [cardCvc, setCardCvc] = useState("")
+
+  // Fetch session & saved addresses to prefill
+  useEffect(() => {
+    async function loadUserData() {
+      try {
+        const sessionRes = await fetch("/api/auth/session")
+        if (sessionRes.ok) {
+          const session = await sessionRes.json()
+          if (session?.user) {
+            if (session.user.email) setEmail((prev) => prev || session.user.email)
+            if (session.user.name) setFullName((prev) => prev || session.user.name)
+
+            // Try loading saved addresses
+            try {
+              const addrRes = await fetch("/api/me/addresses")
+              if (addrRes.ok) {
+                const addrData = await addrRes.json()
+                if (addrData?.data?.addresses && Array.isArray(addrData.data.addresses)) {
+                  setSavedAddresses(addrData.data.addresses)
+                  const defaultAddr = addrData.data.addresses.find((a: SavedAddress) => a.isDefault) || addrData.data.addresses[0]
+                  if (defaultAddr) {
+                    setStreet((prev) => prev || defaultAddr.street || "")
+                    setCity((prev) => prev || defaultAddr.city || "")
+                    setState((prev) => prev || defaultAddr.state || "")
+                    setPostalCode((prev) => prev || defaultAddr.postalCode || "")
+                    setCountry((prev) => prev || defaultAddr.country || "US")
+                  }
+                }
+              }
+            } catch {
+              // ignore
+            }
+          }
+        }
+      } catch {
+        // ignore
+      }
+    }
+    loadUserData()
+  }, [])
+
+  function applySavedAddress(addr: SavedAddress) {
+    setStreet(addr.street)
+    setCity(addr.city)
+    setState(addr.state || "")
+    setPostalCode(addr.postalCode)
+    setCountry(addr.country || "US")
+    toast.success(`Applied address: ${addr.label || "Saved address"}`)
+  }
+
+  // Format Card Number (adds spaces every 4 digits, max 16 digits)
+  function handleCardNumberChange(val: string) {
+    const raw = val.replace(/\D/g, "").slice(0, 16)
+    const formatted = raw.replace(/(\d{4})/g, "$1 ").trim()
+    setCardNumber(formatted)
+  }
+
+  // Format Card Expiry (MM/YY)
+  function handleCardExpiryChange(val: string) {
+    let raw = val.replace(/\D/g, "").slice(0, 4)
+    if (raw.length >= 3) {
+      raw = `${raw.slice(0, 2)}/${raw.slice(2)}`
+    }
+    setCardExpiry(raw)
+  }
+
+  // Format CVC (max 4 digits)
+  function handleCardCvcChange(val: string) {
+    const raw = val.replace(/\D/g, "").slice(0, 4)
+    setCardCvc(raw)
+  }
 
   function handleShippingContinue(e: React.FormEvent) {
     e.preventDefault()
@@ -46,8 +131,17 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
 
   async function handleFinalOrder(e: React.FormEvent) {
     e.preventDefault()
-    if (!cardNumber || !cardExpiry || !cardCvc) {
-      toast.error("Please provide payment card details")
+    const cleanCard = cardNumber.replace(/\s/g, "")
+    if (cleanCard.length < 13) {
+      toast.error("Please enter a valid card number (at least 13 digits)")
+      return
+    }
+    if (cardExpiry.length < 5) {
+      toast.error("Please enter a valid expiration date (MM/YY)")
+      return
+    }
+    if (cardCvc.length < 3) {
+      toast.error("Please enter a valid CVC")
       return
     }
 
@@ -105,7 +199,7 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
             step === "shipping" ? "text-primary font-semibold" : "text-muted-foreground"
           }`}
         >
-          <span className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center text-xs text-primary">
+          <span className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center text-xs text-primary font-semibold">
             1
           </span>
           <span>Delivery Details</span>
@@ -116,7 +210,7 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
             step === "payment" ? "text-primary font-semibold" : "text-muted-foreground"
           }`}
         >
-          <span className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center text-xs text-primary">
+          <span className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center text-xs text-primary font-semibold">
             2
           </span>
           <span>Payment & Review</span>
@@ -136,13 +230,31 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="rounded-xl"
+                className="rounded-xl min-h-[44px]"
               />
             </div>
           </div>
 
           <div className="space-y-4 pt-4 border-t border-border/60">
-            <h3 className="font-heading text-lg font-bold text-foreground">Shipping Address</h3>
+            <div className="flex items-center justify-between">
+              <h3 className="font-heading text-lg font-bold text-foreground">Shipping Address</h3>
+              {savedAddresses.length > 0 && (
+                <div className="flex items-center gap-1.5 text-xs">
+                  <span className="text-muted-foreground">Use:</span>
+                  {savedAddresses.map((addr, idx) => (
+                    <button
+                      key={addr._id || idx}
+                      type="button"
+                      onClick={() => applySavedAddress(addr)}
+                      className="px-2.5 py-1 rounded-full border border-border text-foreground hover:border-primary transition-colors text-xs"
+                    >
+                      {addr.label || `Addr ${idx + 1}`}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <div className="space-y-2">
               <Label htmlFor="fullName">Full name</Label>
               <Input
@@ -151,7 +263,7 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Eleanor Vance"
-                className="rounded-xl"
+                className="rounded-xl min-h-[44px]"
               />
             </div>
 
@@ -163,7 +275,7 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
                 value={street}
                 onChange={(e) => setStreet(e.target.value)}
                 placeholder="45 Mercer Street"
-                className="rounded-xl"
+                className="rounded-xl min-h-[44px]"
               />
             </div>
 
@@ -174,11 +286,11 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
                 value={apartment}
                 onChange={(e) => setApartment(e.target.value)}
                 placeholder="Apt 4B"
-                className="rounded-xl"
+                className="rounded-xl min-h-[44px]"
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-2">
                 <Label htmlFor="city">City</Label>
                 <Input
@@ -187,7 +299,7 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   placeholder="New York"
-                  className="rounded-xl"
+                  className="rounded-xl min-h-[44px]"
                 />
               </div>
               <div className="space-y-2">
@@ -197,12 +309,12 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
                   value={state}
                   onChange={(e) => setState(e.target.value)}
                   placeholder="NY"
-                  className="rounded-xl"
+                  className="rounded-xl min-h-[44px]"
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-2">
                 <Label htmlFor="postalCode">Postal / ZIP code</Label>
                 <Input
@@ -211,7 +323,7 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
                   value={postalCode}
                   onChange={(e) => setPostalCode(e.target.value)}
                   placeholder="10013"
-                  className="rounded-xl"
+                  className="rounded-xl min-h-[44px]"
                 />
               </div>
               <div className="space-y-2">
@@ -222,7 +334,7 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
                   placeholder="United States"
-                  className="rounded-xl"
+                  className="rounded-xl min-h-[44px]"
                 />
               </div>
             </div>
@@ -233,7 +345,7 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
             <RadioGroup value={shippingMethod} onValueChange={setShippingMethod} className="space-y-3">
               <label
                 htmlFor="std"
-                className="flex items-center justify-between p-4 rounded-xl border border-border/80 bg-card cursor-pointer hover:border-primary transition-colors"
+                className="flex items-center justify-between p-4 rounded-xl border border-border/80 bg-card cursor-pointer hover:border-primary transition-colors min-h-[56px]"
               >
                 <div className="flex items-center space-x-3">
                   <RadioGroupItem value="standard" id="std" />
@@ -247,7 +359,7 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
 
               <label
                 htmlFor="exp"
-                className="flex items-center justify-between p-4 rounded-xl border border-border/80 bg-card cursor-pointer hover:border-primary transition-colors"
+                className="flex items-center justify-between p-4 rounded-xl border border-border/80 bg-card cursor-pointer hover:border-primary transition-colors min-h-[56px]"
               >
                 <div className="flex items-center space-x-3">
                   <RadioGroupItem value="express" id="exp" />
@@ -261,7 +373,7 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
             </RadioGroup>
           </div>
 
-          <Button type="submit" size="lg" className="w-full rounded-full shadow-md">
+          <Button type="submit" size="lg" className="w-full rounded-full shadow-md min-h-[48px] text-sm">
             Continue to Payment
           </Button>
         </form>
@@ -269,11 +381,11 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
         <form onSubmit={handleFinalOrder} className="space-y-6">
           <div className="p-4 rounded-2xl bg-muted/50 border border-border/60 space-y-1">
             <div className="flex justify-between items-center text-xs">
-              <span className="text-muted-foreground">Deliver to:</span>
+              <span className="text-muted-foreground font-medium">Deliver to:</span>
               <button
                 type="button"
                 onClick={() => setStep("shipping")}
-                className="text-primary hover:underline font-medium"
+                className="text-primary hover:underline font-medium min-h-[32px] px-2"
               >
                 Edit
               </button>
@@ -298,9 +410,10 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
                   id="card"
                   placeholder="4242 •••• •••• 4242"
                   value={cardNumber}
-                  onChange={(e) => setCardNumber(e.target.value)}
+                  onChange={(e) => handleCardNumberChange(e.target.value)}
+                  maxLength={19}
                   required
-                  className="rounded-xl font-mono text-sm"
+                  className="rounded-xl font-mono text-sm min-h-[44px]"
                 />
               </div>
 
@@ -311,9 +424,10 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
                     id="exp"
                     placeholder="12/28"
                     value={cardExpiry}
-                    onChange={(e) => setCardExpiry(e.target.value)}
+                    onChange={(e) => handleCardExpiryChange(e.target.value)}
+                    maxLength={5}
                     required
-                    className="rounded-xl font-mono text-sm"
+                    className="rounded-xl font-mono text-sm min-h-[44px]"
                   />
                 </div>
                 <div className="space-y-2">
@@ -322,9 +436,10 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
                     id="cvc"
                     placeholder="888"
                     value={cardCvc}
-                    onChange={(e) => setCardCvc(e.target.value)}
+                    onChange={(e) => handleCardCvcChange(e.target.value)}
+                    maxLength={4}
                     required
-                    className="rounded-xl font-mono text-sm"
+                    className="rounded-xl font-mono text-sm min-h-[44px]"
                   />
                 </div>
               </div>
@@ -336,12 +451,12 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
             <span>By placing this order you agree to Virga&apos;s Terms of Use and Return Policy.</span>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <Button
               type="button"
               variant="outline"
               onClick={() => setStep("shipping")}
-              className="rounded-full px-6"
+              className="rounded-full px-6 min-h-[48px]"
             >
               Back
             </Button>
@@ -349,7 +464,7 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
               type="submit"
               disabled={isSubmitting}
               size="lg"
-              className="flex-1 rounded-full shadow-md"
+              className="flex-1 rounded-full shadow-md min-h-[48px]"
             >
               {isSubmitting ? (
                 <>
@@ -368,4 +483,3 @@ export function CheckoutFlow({ items }: CheckoutFlowProps) {
 }
 
 export default CheckoutFlow
-
