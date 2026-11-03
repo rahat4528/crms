@@ -1,4 +1,17 @@
 /** @type {import('next').NextConfig} */
+const cspHeader = `
+  default-src 'self';
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com;
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' blob: data: https://res.cloudinary.com https://images.unsplash.com https:;
+  font-src 'self' data: https:;
+  object-src 'none';
+  base-uri 'self';
+  form-action 'self';
+  frame-ancestors 'none';
+  connect-src 'self' https:;
+`.replace(/\s{2,}/g, ' ').trim()
+
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
@@ -7,7 +20,6 @@ const nextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "res.cloudinary.com" },
       { protocol: "https", hostname: "images.unsplash.com" },
-      { protocol: "https", hostname: "**" },
     ],
   },
 
@@ -16,6 +28,7 @@ const nextConfig = {
       {
         source: "/(.*)",
         headers: [
+          { key: "Content-Security-Policy", value: cspHeader },
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "X-Frame-Options", value: "DENY" },
           { key: "X-XSS-Protection", value: "1; mode=block" },
