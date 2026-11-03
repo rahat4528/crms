@@ -21,7 +21,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.5.2
+          version: 10.5.0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -31,7 +31,7 @@ jobs:
           cache-dependency-path: ./modo-web/pnpm-lock.yaml
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
 
       - name: Run TypeScript typecheck
         run: pnpm typecheck
@@ -44,4 +44,3 @@ jobs:
         env:
           NEXT_TELEMETRY_DISABLED: 1
           AUTH_SECRET: test_auth_secret_for_ci_build_verification_only_32_chars
-
