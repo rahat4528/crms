@@ -44,6 +44,10 @@ export async function PUT(
     }
 
     const { id } = await params
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return failResponse("Invalid collection ID", "INVALID_ID", 400)
+    }
+
     const body = await req.json()
 
     await dbConnect()
@@ -72,6 +76,10 @@ export async function DELETE(
     }
 
     const { id } = await params
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return failResponse("Invalid collection ID", "INVALID_ID", 400)
+    }
+
     await dbConnect()
 
     // Safety check: block delete if it has children
@@ -105,4 +113,3 @@ export async function DELETE(
     return failResponse("Failed to delete collection", "COLLECTION_DELETE_ERROR", 500)
   }
 }
-

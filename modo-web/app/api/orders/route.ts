@@ -4,40 +4,8 @@ import Order, { generateOrderNumber } from "@/models/Order"
 import Item from "@/models/Item"
 import { okResponse, failResponse } from "@/lib/api"
 import { auth } from "@/auth"
-import { z } from "zod"
-
-const CreateOrderSchema = z.object({
-  email: z.string().email(),
-  lines: z
-    .array(
-      z.object({
-        itemId: z.string(),
-        optionSku: z.string().optional(),
-        qty: z.number().int().min(1),
-      })
-    )
-    .min(1, "Order must contain at least one item"),
-  shipTo: z.object({
-    fullName: z.string().min(2),
-    street: z.string().min(3),
-    apartment: z.string().optional(),
-    city: z.string().min(2),
-    state: z.string().optional(),
-    postalCode: z.string().min(2),
-    country: z.string().default("US"),
-    phone: z.string().optional(),
-  }),
-  billTo: z
-    .object({
-      fullName: z.string(),
-      street: z.string(),
-      city: z.string(),
-      postalCode: z.string(),
-      country: z.string().default("US"),
-    })
-    .optional(),
-  paymentProvider: z.string().default("stripe"),
-})
+import { rateLimit, getClientIp, RateLimits } from "@/lib/rate-limit"
+import { CreateOrderSchema } from "@/types/order"
 
 export async function GET(req: NextRequest) {
   try {
@@ -50,12 +18,14 @@ export async function GET(req: NextRequest) {
     const role = session.user.role || "client"
     const isStaff = ["staff", "manager", "owner", "admin"].includes(role)
 
-    const query = isStaff ? {} : { $or: [{ client: session.user.id }, { email: session.user.email }] }
+    // Resource ownership enforcement: customers only see their own orders
+    const query = isStaff
+      ? {}
+      : { $or: [{ client: session.user.id }, { email: session.user.email?.toLowerCase() }] }
 
     const orders = await Order.find(query)
       .sort({ addedAt: -1 })
-      .limit(50)
-      .lean()
+      .lean({ virtuals: true })
 
     return okResponse({ items: orders })
   } catch (error) {
@@ -65,6 +35,17 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  // Rate limiting against automated checkout floods
+  const ip = getClientIp(req)
+  const limitCheck = rateLimit(`orders:${ip}`, RateLimits.ORDERS.limit, RateLimits.ORDERS.windowMs)
+  if (!limitCheck.success) {
+    return failResponse(
+      `Order submission limit reached. Please wait ${limitCheck.retryAfterSeconds} seconds before trying again.`,
+      "RATE_LIMITED",
+      429
+    )
+  }
+
   try {
     const session = await auth()
     const body = await req.json()
@@ -75,6 +56,17 @@ export async function POST(req: NextRequest) {
 
     await dbConnect()
     const { email, lines, shipTo, billTo, paymentProvider } = parsed.data
+
+    // If customer is authenticated, enforce identity binding to prevent spoofing
+    const verifiedEmail = session?.user?.email
+      ? session.user.email.toLowerCase()
+      : email?.toLowerCase()
+
+    if (!verifiedEmail) {
+      return failResponse("A valid contact email is required to process the order", "EMAIL_REQUIRED", 400)
+    }
+
+    const clientId = session?.user?.id || undefined
 
     // Fetch items from DB to compute real verified prices (never trust client)
     const itemIds = lines.map((l) => l.itemId)
@@ -129,8 +121,8 @@ export async function POST(req: NextRequest) {
 
     const order = await Order.create({
       orderNo,
-      client: session?.user?.id || undefined,
-      email: email.toLowerCase(),
+      client: clientId,
+      email: verifiedEmail,
       lines: orderLines,
       totals: {
         subtotal,
@@ -163,4 +155,3 @@ export async function POST(req: NextRequest) {
     return failResponse("Failed to place order", "ORDER_CREATE_ERROR", 500)
   }
 }
-

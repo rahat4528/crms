@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation"
+import mongoose from "mongoose"
 import dbConnect from "@/lib/db"
 import User from "@/models/User"
 import Order from "@/models/Order"
@@ -12,6 +13,10 @@ export const dynamic = "force-dynamic"
 
 export default async function StudioSingleClientPage({ params }: StudioClientPageProps) {
   const { id } = await params
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    notFound()
+  }
+
   await dbConnect()
 
   const clientDoc = await User.findById(id).lean()
@@ -30,4 +35,3 @@ export default async function StudioSingleClientPage({ params }: StudioClientPag
     </div>
   )
 }
-

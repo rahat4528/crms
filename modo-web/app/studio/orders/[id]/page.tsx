@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation"
+import mongoose from "mongoose"
 import dbConnect from "@/lib/db"
 import Order from "@/models/Order"
 import OrderView from "@/components/studio/order-view"
@@ -11,6 +12,10 @@ export const dynamic = "force-dynamic"
 
 export default async function StudioSingleOrderPage({ params }: StudioOrderPageProps) {
   const { id } = await params
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    notFound()
+  }
+
   await dbConnect()
 
   const orderDoc = await Order.findById(id).lean()
@@ -25,4 +30,3 @@ export default async function StudioSingleOrderPage({ params }: StudioOrderPageP
     </div>
   )
 }
-

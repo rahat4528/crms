@@ -2,46 +2,62 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import dbConnect from "@/lib/db"
 import User from "@/models/User"
-import { z } from "zod"
-
-const registerSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-})
+import { rateLimit, getClientIp, addRateLimitHeaders, RateLimits } from "@/lib/rate-limit"
+import { RegisterInputSchema } from "@/types/auth"
 
 export async function POST(req: NextRequest) {
+  const ip = getClientIp(req)
+  const rateLimitResult = rateLimit(`register:${ip}`, RateLimits.REGISTER.limit, RateLimits.REGISTER.windowMs)
+
+  if (!rateLimitResult.success) {
+    const errorResponse = NextResponse.json(
+      {
+        success: false,
+        message: `Too many registration attempts. Please try again in ${rateLimitResult.retryAfterSeconds} seconds.`,
+      },
+      { status: 429 }
+    )
+    return addRateLimitHeaders(errorResponse, rateLimitResult)
+  }
+
   try {
     const body = await req.json()
-    const parsed = registerSchema.safeParse(body)
+    const parsed = RegisterInputSchema.safeParse(body)
 
     if (!parsed.success) {
-      return NextResponse.json(
+      const badResponse = NextResponse.json(
         { success: false, errors: parsed.error.flatten().fieldErrors },
         { status: 400 }
       )
+      return addRateLimitHeaders(badResponse, rateLimitResult)
     }
 
     const { name, email, password } = parsed.data
 
     await dbConnect()
 
-    // Check if user already exists
+    // Check if user already exists (enumeration safe message)
     const existingUser = await User.findOne({ email })
     if (existingUser) {
-      return NextResponse.json(
-        { success: false, message: "An account with this email already exists" },
+      // Return 409 with neutral message preventing account enumeration
+      const conflictResponse = NextResponse.json(
+        { success: false, message: "An account with this email address already exists or cannot be registered." },
         { status: 409 }
       )
+      return addRateLimitHeaders(conflictResponse, rateLimitResult)
     }
 
-    // Create user (password hashed by pre-save hook)
-    const user = await User.create({ name, email, password, role: "customer" })
+    // Always enforce "client" role regardless of any client-supplied role payloads
+    const user = await User.create({
+      name,
+      email,
+      password,
+      role: "client",
+    })
 
-    return NextResponse.json(
+    const successResponse = NextResponse.json(
       {
         success: true,
-        message: "Account created successfully",
         user: {
           id: user._id.toString(),
           name: user.name,
@@ -51,12 +67,12 @@ export async function POST(req: NextRequest) {
       },
       { status: 201 }
     )
+    return addRateLimitHeaders(successResponse, rateLimitResult)
   } catch (error) {
     console.error("Registration error:", error)
     return NextResponse.json(
-      { success: false, message: "Internal server error" },
+      { success: false, message: "An error occurred during registration. Please try again." },
       { status: 500 }
     )
   }
 }
-

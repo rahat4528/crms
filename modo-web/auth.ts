@@ -4,10 +4,11 @@ import dbConnect from "@/lib/db"
 import User from "@/models/User"
 import { authConfig } from "@/auth.config"
 import { z } from "zod"
+import { rateLimit, RateLimits } from "@/lib/rate-limit"
 
 const credentialsSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1),
+  email: z.string().trim().email().max(255).toLowerCase(),
+  password: z.string().min(1).max(128),
 })
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -24,6 +25,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!parsed.success) return null
 
         const { email, password } = parsed.data
+
+        // Rate limit by account identifier to prevent credential stuffing & brute-force attacks
+        const limitCheck = rateLimit(`login:${email}`, RateLimits.LOGIN.limit, RateLimits.LOGIN.windowMs)
+        if (!limitCheck.success) {
+          console.warn(`[Security] Login rate limit exceeded for account: ${email}`)
+          return null
+        }
 
         await dbConnect()
         const user = await User.findOne({ email }).select("+password")

@@ -61,6 +61,10 @@ export async function PUT(
     }
 
     const { id } = await params
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return failResponse("Invalid item ID", "INVALID_ID", 400)
+    }
+
     const body = await req.json()
     const parsed = UpdateItemSchema.safeParse(body)
     if (!parsed.success) {
@@ -93,6 +97,10 @@ export async function DELETE(
     }
 
     const { id } = await params
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return failResponse("Invalid item ID", "INVALID_ID", 400)
+    }
+
     await dbConnect()
     const item = await Item.findByIdAndDelete(id)
 
@@ -106,4 +114,3 @@ export async function DELETE(
     return failResponse("Failed to delete item", "ITEM_DELETE_ERROR", 500)
   }
 }
-
