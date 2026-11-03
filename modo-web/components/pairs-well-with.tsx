@@ -14,9 +14,7 @@ export function PairsWellWith({ items = [] }: PairsWellWithProps) {
     <section className="pt-16 border-t border-border/80 space-y-6">
       <div className="flex items-end justify-between">
         <div>
-          <span className="text-xs font-semibold uppercase tracking-widest text-primary">
-            Harmonious Styling
-          </span>
+          <span className="editorial-caps text-primary">Harmonious Tailoring</span>
           <h3 className="font-heading text-2xl font-bold tracking-tight text-foreground mt-1">
             Pairs Well With
           </h3>
@@ -34,25 +32,27 @@ export function PairsWellWith({ items = [] }: PairsWellWithProps) {
             <Link
               key={item._id}
               href={`/shop/${item.slug}`}
-              className="group block space-y-2"
+              className="group block space-y-2.5"
             >
-              <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-muted border border-border/60">
+              <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-muted border border-border/70 shadow-sm transition-all duration-300 group-hover:border-border">
                 <Image
                   src={cover}
                   alt={item.title}
                   fill
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 50vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover transition-transform duration-700 group-hover:scale-104"
                 />
               </div>
-              <h4 className="text-sm font-medium text-foreground group-hover:text-primary transition-colors line-clamp-1">
-                {item.title}
-              </h4>
-              <p className="text-sm font-semibold text-foreground">
-                {formatPrice(item.price)}
-              </p>
+              <div className="space-y-0.5">
+                <h4 className="text-sm font-medium text-foreground group-hover:text-primary transition-colors line-clamp-1">
+                  {item.title}
+                </h4>
+                <p className="text-sm font-semibold text-foreground tracking-tight">
+                  {formatPrice(item.price)}
+                </p>
+              </div>
             </Link>
-          );
+          )
         })}
       </div>
     </section>
@@ -60,4 +60,3 @@ export function PairsWellWith({ items = [] }: PairsWellWithProps) {
 }
 
 export default PairsWellWith
-

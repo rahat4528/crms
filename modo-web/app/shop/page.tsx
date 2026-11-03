@@ -82,27 +82,27 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <TopBar />
-      <main className="flex-1 container-virga py-8 space-y-6">
+      <main className="flex-1 container-virga py-6 sm:py-8 space-y-6">
         <TrailNav items={[{ label: "Catalog", href: "/shop" }]} />
 
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4 border-b border-border/60">
-          <div>
+        {/* Catalog Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-border/70">
+          <div className="space-y-1">
+            <span className="editorial-caps text-primary">Permanent & Seasonal Editions</span>
             <h1 className="font-heading text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
               Considered Catalog
             </h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              Showing {items.length} intentional pieces designed for longevity.
+            <p className="text-xs sm:text-sm text-muted-foreground font-light">
+              Showing {items.length} intentional pieces designed for tactile comfort and longevity.
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 pt-2">
-          {/* Sidebar Filters */}
-          <div className="lg:col-span-1">
-            <FilterPanel collections={collections} />
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8 pt-2">
+          {/* Sidebar / Mobile Filters */}
+          <FilterPanel collections={collections} />
 
-          {/* Catalog Grid */}
+          {/* Product Grid */}
           <div className="lg:col-span-3">
             <ItemGrid items={items} />
           </div>
@@ -112,4 +112,3 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
     </div>
   )
 }
-

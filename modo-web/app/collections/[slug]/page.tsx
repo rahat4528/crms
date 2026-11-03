@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
+import { ArrowUpRight } from "lucide-react"
 import TopBar from "@/components/top-bar"
 import SiteFooter from "@/components/site-footer"
 import ItemGrid from "@/components/item-grid"
@@ -45,10 +46,17 @@ export default async function CollectionDetailPage({ params }: CollectionPagePro
       <TopBar />
       <main className="flex-1">
         {/* Collection Hero Header */}
-        <div className="relative bg-muted/40 py-16 sm:py-24 border-b border-border/60">
+        <div className="relative bg-card py-14 sm:py-20 border-b border-border/80">
           {collection.cover && (
-            <div className="absolute inset-0 z-0 opacity-20">
-              <Image src={collection.cover} alt={collection.title} fill sizes="100vw" className="object-cover" />
+            <div className="absolute inset-0 z-0 opacity-15">
+              <Image
+                src={collection.cover}
+                alt={collection.title}
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover object-center"
+              />
             </div>
           )}
           <div className="container-virga relative z-10 space-y-4">
@@ -58,26 +66,26 @@ export default async function CollectionDetailPage({ params }: CollectionPagePro
                 { label: collection.title },
               ]}
             />
-            <span className="text-xs font-semibold uppercase tracking-widest text-primary">
-              Curated Collection
+            <span className="editorial-caps text-primary">
+              Permanent Series
             </span>
-            <h1 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-foreground">
+            <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground">
               {collection.title}
             </h1>
             {collection.description && (
-              <p className="text-base text-muted-foreground max-w-2xl leading-relaxed">
+              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed font-light">
                 {collection.description}
               </p>
             )}
 
-            {/* Sub-collection chips */}
+            {/* Sub-collection navigation */}
             {collection.children && collection.children.length > 0 && (
-              <div className="flex flex-wrap gap-2 pt-2">
+              <div className="flex flex-wrap gap-2 pt-3">
                 {(collection.children as any[]).map((child: { _id: string; title: string; slug: string }) => (
                   <Link
                     key={child._id}
                     href={`/collections/${child.slug}`}
-                    className="px-4 py-1.5 rounded-full text-xs font-medium bg-card border border-border/80 hover:border-foreground text-foreground transition-colors"
+                    className="px-3.5 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider bg-background border border-border/80 hover:border-foreground text-foreground transition-colors"
                   >
                     {child.title}
                   </Link>
@@ -89,10 +97,14 @@ export default async function CollectionDetailPage({ params }: CollectionPagePro
 
         {/* Items Grid */}
         <div className="container-virga py-12 space-y-6">
-          <div className="flex justify-between items-center text-xs text-muted-foreground">
+          <div className="flex justify-between items-center text-xs font-mono text-muted-foreground pb-2 border-b border-border/50">
             <span>Showing {items.length} pieces in {collection.title}</span>
-            <Link href="/shop" className="hover:text-foreground">
-              View all collections →
+            <Link
+              href="/shop"
+              className="hover:text-foreground inline-flex items-center gap-1 transition-colors"
+            >
+              <span>Full Catalog</span>
+              <ArrowUpRight className="h-3 w-3" />
             </Link>
           </div>
           <ItemGrid items={items} />

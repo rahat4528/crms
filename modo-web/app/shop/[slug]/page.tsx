@@ -11,9 +11,9 @@ import dbConnect from "@/lib/db"
 import Item from "@/models/Item"
 import Review from "@/models/Review"
 import { formatPrice } from "@/lib/cn"
-import { Badge } from "@/components/ui/badge"
 import { AddToBagClient } from "./add-to-bag-client"
 import type { ItemDto } from "@/types/item"
+import { Sparkles, ShieldCheck, RefreshCw } from "lucide-react"
 
 interface ItemPageProps {
   params: Promise<{ slug: string }>
@@ -83,7 +83,7 @@ export default async function ItemDetailPage({ params }: ItemPageProps) {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <TopBar />
-      <main className="flex-1 container-virga py-6 space-y-12">
+      <main className="flex-1 container-virga py-6 sm:py-8 space-y-12">
         <TrailNav
           items={[
             { label: "Shop", href: "/shop" },
@@ -92,41 +92,47 @@ export default async function ItemDetailPage({ params }: ItemPageProps) {
           ]}
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
           {/* Gallery */}
-          <div>
+          <div className="lg:col-span-7">
             <ItemGallery gallery={item.gallery} title={item.title} />
           </div>
 
           {/* Details & Purchasing */}
-          <div className="space-y-6">
+          <div className="lg:col-span-5 space-y-6">
             <div className="space-y-2">
-              {item.isFresh && (
-                <Badge className="bg-foreground text-background text-xs font-medium rounded-full px-3 py-0.5">
-                  Fresh Arrival
-                </Badge>
-              )}
+              <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
+                <span className="text-primary font-semibold uppercase tracking-wider">{collectionTitle}</span>
+                {item.isFresh && (
+                  <>
+                    <span>·</span>
+                    <span className="text-foreground font-medium uppercase tracking-wider">New Arrival</span>
+                  </>
+                )}
+              </div>
+
               <h1 className="font-heading text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
                 {item.title}
               </h1>
+
               {item.summary && (
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-sm text-muted-foreground leading-relaxed font-light">
                   {item.summary}
                 </p>
               )}
 
               <div className="flex items-center space-x-3 pt-2">
-                <span className="font-heading text-2xl font-bold text-foreground">
+                <span className="font-heading text-2xl font-bold text-foreground tracking-tight">
                   {formatPrice(item.price)}
                 </span>
                 {hasDiscount && (
                   <>
-                    <span className="text-sm text-muted-foreground line-through">
+                    <span className="text-sm text-muted-foreground line-through font-normal">
                       {formatPrice(item.listPrice!)}
                     </span>
-                    <Badge className="bg-primary text-primary-foreground text-xs rounded-full">
+                    <span className="text-xs font-mono font-semibold text-primary uppercase tracking-wider">
                       Save {Math.round(((item.listPrice! - item.price) / item.listPrice!) * 100)}%
-                    </Badge>
+                    </span>
                   </>
                 )}
               </div>
@@ -135,12 +141,27 @@ export default async function ItemDetailPage({ params }: ItemPageProps) {
             {/* Interactive Add to Bag component */}
             <AddToBagClient item={item} />
 
+            {/* Atelier Guarantees Strip */}
+            <div className="p-4 rounded-xl bg-card border border-border/80 space-y-2.5 text-xs text-muted-foreground">
+              <div className="flex items-center gap-2 text-foreground font-medium">
+                <ShieldCheck className="h-4 w-4 text-primary shrink-0" />
+                <span>Atelier Standard & Lifetime Repair Consults</span>
+              </div>
+              <p className="pl-6 text-[11px] leading-relaxed text-muted-foreground">
+                Each piece includes replacement horn buttons and direct access to tailoring advice from our New York atelier.
+              </p>
+              <div className="flex items-center gap-2 text-foreground font-medium pt-1 border-t border-border/50">
+                <RefreshCw className="h-4 w-4 text-secondary shrink-0" />
+                <span>Complimentary Carbon-Neutral Returns within 30 Days</span>
+              </div>
+            </div>
+
             {/* Narrative description */}
             <div className="pt-6 border-t border-border/60 space-y-3">
-              <h3 className="font-heading text-sm font-semibold uppercase tracking-wider text-foreground">
-                The Narrative
+              <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-foreground">
+                Tailoring & Material Narrative
               </h3>
-              <p className="text-sm text-foreground/80 leading-relaxed whitespace-pre-line">
+              <p className="text-sm text-foreground/80 leading-relaxed whitespace-pre-line font-light">
                 {item.description}
               </p>
             </div>
@@ -164,4 +185,3 @@ export default async function ItemDetailPage({ params }: ItemPageProps) {
     </div>
   )
 }
-
