@@ -4,32 +4,33 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Virga Sand & Ink palette (Light) */
-  --background: oklch(0.96 0.01 75); /* #F6F1EA Warm Sand */
-  --foreground: oklch(0.18 0.01 45); /* #14110F Deep Ink */
-  --card: oklch(0.98 0.005 75);
-  --card-foreground: oklch(0.18 0.01 45);
-  --popover: oklch(0.98 0.005 75);
-  --popover-foreground: oklch(0.18 0.01 45);
+  /* Virga Sand & Ink Palette — Warm, Tactile, Editorial */
+  --background: oklch(0.97 0.008 78); /* #F7F4EE Warm Linen Sand */
+  --foreground: oklch(0.16 0.012 45); /* #13110F Deep Charcoal Ink */
+  --card: oklch(0.99 0.004 80);       /* #FCFAF7 Clean Ivory Surface */
+  --card-foreground: oklch(0.16 0.012 45);
+  --popover: oklch(0.99 0.004 80);
+  --popover-foreground: oklch(0.16 0.012 45);
 
   /* Brand Accents */
-  --primary: oklch(0.52 0.16 42); /* Clay #B4532A */
+  --primary: oklch(0.50 0.15 40);     /* Terracotta Clay #A84E27 */
   --primary-foreground: oklch(0.98 0.005 75);
-  --secondary: oklch(0.44 0.06 148); /* Moss #3F5D4A */
+  --secondary: oklch(0.42 0.065 145); /* Deep Atelier Moss #3A5745 */
   --secondary-foreground: oklch(0.98 0.005 75);
 
-  --muted: oklch(0.92 0.01 75);
-  --muted-foreground: oklch(0.45 0.02 50);
-  --accent: oklch(0.93 0.015 70);
-  --accent-foreground: oklch(0.18 0.01 45);
+  --muted: oklch(0.93 0.01 75);       /* Warm Oat Muted */
+  --muted-foreground: oklch(0.46 0.015 50); /* Refined Warm Slate */
+  --accent: oklch(0.94 0.012 72);
+  --accent-foreground: oklch(0.16 0.012 45);
   --destructive: oklch(0.55 0.22 27);
   --destructive-foreground: oklch(0.98 0.005 75);
 
-  --border: oklch(0.88 0.01 75);
-  --input: oklch(0.88 0.01 75);
-  --ring: oklch(0.52 0.16 42);
+  --border: oklch(0.89 0.008 75);     /* Hairline Linen Border */
+  --input: oklch(0.89 0.008 75);
+  --ring: oklch(0.50 0.15 40);
 
-  --radius: 0.875rem;
+  /* Architectural Radii (Tailored luxury rather than bubbly roundness) */
+  --radius: 0.5rem; /* 8px baseline */
 
   /* Fonts */
   --font-sans: var(--font-sans, "Manrope", sans-serif);
@@ -37,48 +38,48 @@
   --font-mono: var(--font-mono, "JetBrains Mono", monospace);
 
   /* Studio Sidebar */
-  --sidebar: oklch(0.95 0.01 75);
-  --sidebar-foreground: oklch(0.18 0.01 45);
-  --sidebar-primary: oklch(0.52 0.16 42);
+  --sidebar: oklch(0.95 0.008 75);
+  --sidebar-foreground: oklch(0.16 0.012 45);
+  --sidebar-primary: oklch(0.50 0.15 40);
   --sidebar-primary-foreground: oklch(0.98 0.005 75);
   --sidebar-accent: oklch(0.92 0.01 75);
-  --sidebar-accent-foreground: oklch(0.18 0.01 45);
-  --sidebar-border: oklch(0.88 0.01 75);
-  --sidebar-ring: oklch(0.52 0.16 42);
+  --sidebar-accent-foreground: oklch(0.16 0.012 45);
+  --sidebar-border: oklch(0.89 0.008 75);
+  --sidebar-ring: oklch(0.50 0.15 40);
 }
 
 .dark {
-  /* Virga Charcoal & Lifted Clay/Moss (Dark) */
-  --background: oklch(0.19 0.01 45); /* Warm Charcoal #171412 */
-  --foreground: oklch(0.95 0.01 75);
-  --card: oklch(0.23 0.01 45);
-  --card-foreground: oklch(0.95 0.01 75);
-  --popover: oklch(0.23 0.01 45);
-  --popover-foreground: oklch(0.95 0.01 75);
+  /* Virga Charcoal & Lifted Clay/Moss (Dark Mode) */
+  --background: oklch(0.18 0.012 45); /* #161311 Warm Charcoal Slate */
+  --foreground: oklch(0.96 0.008 75);
+  --card: oklch(0.22 0.012 45);       /* #1E1A18 Lifted Charcoal Card */
+  --card-foreground: oklch(0.96 0.008 75);
+  --popover: oklch(0.22 0.012 45);
+  --popover-foreground: oklch(0.96 0.008 75);
 
-  --primary: oklch(0.68 0.14 45); /* Lifted Clay */
+  --primary: oklch(0.68 0.14 45);     /* Warm Lifted Clay */
   --primary-foreground: oklch(0.14 0.01 45);
-  --secondary: oklch(0.62 0.07 148); /* Lifted Moss */
+  --secondary: oklch(0.62 0.07 148);   /* Lifted Atelier Moss */
   --secondary-foreground: oklch(0.14 0.01 45);
 
-  --muted: oklch(0.28 0.01 45);
+  --muted: oklch(0.27 0.012 45);
   --muted-foreground: oklch(0.72 0.01 75);
-  --accent: oklch(0.30 0.01 45);
-  --accent-foreground: oklch(0.95 0.01 75);
+  --accent: oklch(0.29 0.012 45);
+  --accent-foreground: oklch(0.96 0.008 75);
   --destructive: oklch(0.55 0.22 27);
   --destructive-foreground: oklch(0.98 0.005 75);
 
-  --border: oklch(0.32 0.01 45);
-  --input: oklch(0.32 0.01 45);
+  --border: oklch(0.30 0.012 45);     /* Subtle Dark Hairline */
+  --input: oklch(0.30 0.012 45);
   --ring: oklch(0.68 0.14 45);
 
-  --sidebar: oklch(0.17 0.01 45);
-  --sidebar-foreground: oklch(0.95 0.01 75);
+  --sidebar: oklch(0.16 0.012 45);
+  --sidebar-foreground: oklch(0.96 0.008 75);
   --sidebar-primary: oklch(0.68 0.14 45);
   --sidebar-primary-foreground: oklch(0.14 0.01 45);
-  --sidebar-accent: oklch(0.25 0.01 45);
-  --sidebar-accent-foreground: oklch(0.95 0.01 75);
-  --sidebar-border: oklch(0.30 0.01 45);
+  --sidebar-accent: oklch(0.24 0.012 45);
+  --sidebar-accent-foreground: oklch(0.96 0.008 75);
+  --sidebar-border: oklch(0.28 0.012 45);
   --sidebar-ring: oklch(0.68 0.14 45);
 }
 
@@ -116,10 +117,10 @@
   --font-heading: var(--font-heading);
   --font-mono: var(--font-mono);
 
-  --radius-sm: calc(var(--radius) - 6px);
-  --radius-md: calc(var(--radius) - 3px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
 }
 
 @layer base {
@@ -127,15 +128,16 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1, "cv02" 1;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading), var(--font-sans), sans-serif;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
   }
 }
 
+/* Editorial Container & Typography Utility Classes */
 .container-virga,
 .container-modo {
   width: 100%;
@@ -143,7 +145,7 @@
   margin-right: auto;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
-  max-width: 80rem;
+  max-width: 86rem;
 }
 
 @media (min-width: 640px) {
@@ -157,12 +159,60 @@
 @media (min-width: 1024px) {
   .container-virga,
   .container-modo {
-    padding-left: 3rem;
-    padding-right: 3rem;
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
   }
 }
 
-/* Reduced Motion */
+/* Editorial Micro-Typography */
+.editorial-caps {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.editorial-serif-accent {
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* Hairline dividers for luxury feel */
+.hairline-border {
+  border-width: 1px;
+  border-color: var(--border);
+}
+
+/* Smooth Image zoom & fade transitions */
+.editorial-image-hover {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+}
+
+.editorial-image-hover:hover {
+  transform: scale(1.03);
+}
+
+/* Custom minimal scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(0.85 0.01 75);
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: oklch(0.32 0.01 45);
+}
+
+/* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;
